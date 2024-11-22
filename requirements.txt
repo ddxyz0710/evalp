@@ -1,0 +1,10 @@
+imageio==2.9.0
+matplotlib==3.3.4
+numpy==1.19.2
+Pillow==10.4.0
+scikit_learn==0.24.1
+scipy==1.6.1
+tensorboardX==2.6.2.2
+torch==1.9.0a0+df837d0
+torchvision==0.9.0a0
+tqdm==4.53.0
