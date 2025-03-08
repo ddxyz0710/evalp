@@ -46,8 +46,7 @@ stats_headings = [ #['epoch',          '{:>14}',  '{:>14d}'],
                 ['en(F)',         '{:>14}',  '{:>14.3f}'], #log_probF 
                 ['norm(grad(F))',  '{:>14}',  '{:>14.3f}'],
                 ['norm(weight(F))',  '{:>14}',  '{:>14.3f}'],
-            #   ['inception',            '{:>14}',  '{:>14.3f}'],
-            #   ['inception_std', '{:>14}', '{:>14.3f}'],
+
                 ['fid(gen)', '{:>14}', '{:>14.3f}'],
 
             ]
@@ -315,17 +314,6 @@ def main(eval_args):
     discNet = _netEConv(eval_args).cuda()
     print(discNet)
 
-    # if concat:
-    #     in_channel =  discNet.s_size[discNet.ftr_map_size] + discNet.Cin
-    # else:
-    #     in_channel =  discNet.Cin
-        # sampler net 
-    # if args.dataset == 'celeba_64':
-    #     num_blocks = 8
-    #     mid_channels = 64
-    # elif args.dataset == 'cifar10':
-    #     num_blocks = 10
-    #     mid_channels = 128
     discriminator_path = eval_args.save #+ f'/midchn{eval_args.sampler_mid_channels}-nblk{eval_args.sampler_num_blocks}'
     # eval_args.save = discriminator_path
     Path(discriminator_path).mkdir(parents=True, exist_ok=True)
@@ -740,13 +728,6 @@ def test_vae_fid_with_evalp_based_snis(model, Dnet, evalp, args, total_fid_sampl
     return fid
 
 
-
-
-
-
-
-    # path_fake_data = os.path.join(args.save, f'pz_samples_{group_idx}.npy')
-    # np.save(path_fake_data, fake_samples_all)
 
 
 

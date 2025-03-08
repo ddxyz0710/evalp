@@ -316,17 +316,6 @@ def main(eval_args):
     discNet = _netEConv(eval_args).cuda()
     print(discNet)
 
-    # if concat:
-    #     in_channel =  discNet.s_size[discNet.ftr_map_size] + discNet.Cin
-    # else:
-    #     in_channel =  discNet.Cin
-        # sampler net 
-    # if args.dataset == 'celeba_64':
-    #     num_blocks = 8
-    #     mid_channels = 64
-    # elif args.dataset == 'cifar10':
-    #     num_blocks = 10
-    #     mid_channels = 128
     discriminator_path = eval_args.save #+ f'/midchn{eval_args.sampler_mid_channels}-nblk{eval_args.sampler_num_blocks}'
     # eval_args.save = discriminator_path
     Path(discriminator_path).mkdir(parents=True, exist_ok=True)
@@ -341,9 +330,7 @@ def main(eval_args):
 
     optimD = torch.optim.Adam(discNet.parameters(), lr=eval_args.lrD, weight_decay=1e-6, betas=(0.5, 0.999))
     optimF = torch.optim.Adam(samplerNet.parameters(), lr=eval_args.lrF, weight_decay=1e-6, betas=(0.5, 0.999))
-    # lrF_schedule = torch.optim.lr_scheduler.ReduceLROnPlateau(optimF, factor=0.8, patience=5)
-    # lrD_schedule = torch.optim.lr_scheduler.ReduceLROnPlateau(optimD, factor=0.8, patience=5)
-    # fid = test_vae_fid_with_evalp(model, None, eval_args, eval_args.num_fid_samples)
+ 
     # Initialize stats
     stat_1 = {k[0]:[] for k in stats_headings}
     stat_1_i = []
@@ -486,8 +473,7 @@ def train(args, epoch,
         # assert z_pos.size() == pnoise.size()
         # flatten 
         bsz = z_pos.size(0)
-        # z_pos = z_pos.view(bsz, -1)
-        # pnoise = pnoise.view(bsz, -1)
+
 
         model.zero_grad()
         Dnet.zero_grad()
@@ -562,15 +548,11 @@ def test(args, epoch,
           loss_path=None, 
           concat=True):
 
-    # NOTE: model.eval() was creating problem. Commenting it. 
     Dnet.eval()
     Fnet.eval()
     model.eval()
 
-    # if concat:
-    #     in_channel = Dnet.s_size[Dnet.ftr_map_size] + Dnet.Cin
-    # else:
-    #     in_channel = Dnet.Cin
+
     in_channel = args.in_channel
 
     evalp = EVALP(Fnet, list(fixed_noise.size()[1:]), out_size=[20, 8, 8])
@@ -676,7 +658,7 @@ def create_generator_vae(model, batch_size, num_total_samples):
         with torch.no_grad():
             logits = model.sample(batch_size, 1.0) # 2nd arg is the temperature
             output = model.decoder_output(logits)
-            #! Changing to sampling using sample() fn to be consistent with NCP code. 
+            
             output_img = output.mean if isinstance(output, torch.distributions.bernoulli.Bernoulli) else output.mean()
    
         yield output_img.float()

@@ -1,5 +1,6 @@
 # RAE's encoder and decoder model
 
+
 import os
 import random
 
@@ -967,8 +968,6 @@ def train(opt, output_dir):
 
             global_step += 1
 
-            #? Add breakpoint for debugging
-            # break
         
         # end of datalaoder
 
@@ -1032,7 +1031,8 @@ def train(opt, output_dir):
 
 
         # end of epoch
-    
+
+
     # Eval the final and the best model
     fid_dict = get_fid_vae(netI, ext_netG, opt, opt.log_fid_with_smpls, recon_fid=False)
     opt_dict = {'netE': (netE, optimizerE),'netF': (netF, optimizerF)}

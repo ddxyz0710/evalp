@@ -1071,9 +1071,7 @@ def train(opt, output_dir):
                 global_step += 1
 
                 #? Add breakpoint for debugging
-                # break
-        
-        # end of datalaoder
+
 
         eval_flag()
 
