@@ -34,7 +34,7 @@ Train the EVaLP model:
 
 ### 1st Stage  
 
-Train the HVAE model  
+Train the HVAE model:  
 
 - Run the CelebA experiment: ``bash scripts/run_train_nvae_celeba64.sh``
 - Run the CIFAR experiment: ``bash scripts/run_train_nvae_cifar.sh``  
